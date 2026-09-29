@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Painel Administrativo</title>
+
+<link rel="stylesheet" href="./admin.css">
+
+</head>
+
+<body>
+
+<header>
+    <h1>Painel Administrativo</h1>
+    <p>Gerencie as músicas do seu player</p>
+</header>
+
+<main>
+
+    <section class="formulario">
+
+        <h2>Cadastrar Música</h2>
+
+        <form id="form-musica">
+
+            <div class="campo">
+                <label for="titulo">Título da música</label>
+                <input
+                    type="text"
+                    id="titulo"
+                    placeholder="Digite o título da música"
+                    required
+                >
+            </div>
+
+            <div class="campo">
+                <label for="artista">Artista</label>
+                <input
+                    type="text"
+                    id="artista"
+                    placeholder="Digite o nome do artista"
+                    required
+                >
+            </div>
+
+            <div class="campo">
+                <label for="estilo">Estilo musical</label>
+                <input
+                    type="text"
+                    id="estilo"
+                    placeholder="Ex: Funk, Pop, Rap..."
+                    required
+                >
+            </div>
+
+            <div class="campo">
+                <label for="duracao">Duração</label>
+                <input
+                    type="text"
+                    id="duracao"
+                    placeholder="Ex: 03:20"
+                    required
+                >
+            </div>
+
+            <div class="campo">
+                <label for="capaUrl">Link da capa</label>
+                <input
+                    type="url"
+                    id="capaUrl"
+                    placeholder="Cole o link da imagem da capa"
+                    required
+                >
+            </div>
+
+            <div class="campo">
+                <label for="audioUrl">Link do áudio</label>
+                <input
+                    type="url"
+                    id="audioUrl"
+                    placeholder="Cole o link do arquivo MP3"
+                    required
+                >
+            </div>
+
+            <button type="submit" id="btn-cadastrar">
+                Cadastrar Música
+            </button>
+
+        </form>
+
+    </section>
+
+    <section class="lista">
+
+        <h2>Músicas cadastradas</h2>
+
+        <div id="lista-musicas">
+
+        </div>
+
+    </section>
+
+</main>
+
+<script type="module" src="./admin.js"></script>
+```
+
+</body>
+
+</html>

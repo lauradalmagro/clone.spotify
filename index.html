@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Player de Músicas</title>
+
+<link rel="stylesheet" href="./style.css">
+
+</head>
+
+<body>
+
+<header>
+    <h1>Music</h1>
+    <p>Escolha uma música para ouvir</p>
+</header>
+
+<main>
+
+    <section class="player">
+
+        <div class="capa-player">
+            <img id="capa-atual" src="" alt="Capa da música">
+        </div>
+
+        <div class="informacoes-player">
+            <h2 id="titulo-atual">Nenhuma música selecionada</h2>
+            <p id="artista-atual">Selecione uma música abaixo</p>
+        </div>
+
+        <audio id="audio-player" controls>
+            Seu navegador não suporta o elemento de áudio.
+        </audio>
+
+    </section>
+
+    <section class="musicas">
+
+        <h2>Músicas disponíveis</h2>
+
+        <div id="lista-musicas">
+
+        </div>
+
+    </section>
+
+</main>
+
+<script type="module" src="./main.js"></script>
+
+</body>
+
+</html>
