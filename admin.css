@@ -71,28 +71,56 @@ margin-bottom: 8px;
 }
 
 .campo input {
-height: 48px;
-padding: 0 15px;
-background-color: #eeece3;
-color: #30352b;
-border: 1px solid #d3d0c4;
-border-radius: 10px;
-font-size: 14px;
-transition: 0.2s;
+    height: 48px;
+    padding: 0 15px;
+    background-color: #eeece3;
+    color: #30352b;
+    border: 1px solid #d3d0c4;
+    border-radius: 10px;
+    font-size: 14px;
+    transition: 0.2s;
 }
 
 .campo input::placeholder {
-color: #999b91;
+    color: #999b91;
 }
 
 .campo input:focus {
-outline: none;
-border-color: #6f7d58;
-box-shadow: 0 0 0 3px rgba(111, 125, 88, 0.12);
+    outline: none;
+    border-color: #6f7d58;
+    box-shadow: 0 0 0 3px rgba(111, 125, 88, 0.12);
 }
 
-.campo input[type="url"] {
-font-size: 13px;
+.campo input[type="file"] {
+    height: auto;
+    min-height: 52px;
+    padding: 7px;
+    cursor: pointer;
+    color: #777b70;
+    background-color: #eeece3;
+}
+
+.campo input[type="file"]::file-selector-button {
+    background-color: #687653;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 9px 15px;
+    margin-right: 12px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.campo input[type="file"]::file-selector-button:hover {
+    background-color: #566342;
+}
+
+.campo input[type="file"]:focus {
+    outline: none;
+    border-color: #6f7d58;
+    box-shadow: 0 0 0 3px rgba(111, 125, 88, 0.12);
 }
 
 #btn-cadastrar {

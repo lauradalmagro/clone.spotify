@@ -1,78 +1,122 @@
 import { database } from "./configfirebase.js";
 
 import {
-ref,
-push,
-set,
-onValue,
-update,
-remove
+    ref,
+    push,
+    set,
+    onValue,
+    update,
+    remove
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
 
-/* CRIAR MÚSICA */
+export async function criarMusica(
+    titulo,
+    artista,
+    estilo,
+    duracao,
+    capaBase64,
+    audioBase64
+) {
 
-export async function criarMusica(titulo, artista, estilo, duracao, capaUrl, audioUrl) {
+    const musicasRef = ref(database, "musicas");
 
-const musicasRef = ref(database, "musicas");
+    const novaMusicaRef = push(musicasRef);
 
-const novaMusicaRef = push(musicasRef);
 
-const musica = {
-    id: novaMusicaRef.key,
-    titulo: titulo,
-    artista: artista,
-    estilo: estilo,
-    duracao: duracao,
-    capaUrl: capaUrl,
-    audioUrl: audioUrl
-};
+    const musica = {
 
-await set(novaMusicaRef, musica);
+        id: novaMusicaRef.key,
+
+        titulo: titulo,
+
+        artista: artista,
+
+        estilo: estilo,
+
+        duracao: duracao,
+
+        capaBase64: capaBase64,
+
+        audioBase64: audioBase64
+
+    };
+
+
+    await set(novaMusicaRef, musica);
+
 }
-
-/* BUSCAR MÚSICAS */
 
 export function buscarMusicas(callback) {
 
-const musicasRef = ref(database, "musicas");
+    const musicasRef = ref(database, "musicas");
 
-onValue(musicasRef, (snapshot) => {
 
-    const dados = snapshot.val();
+    onValue(musicasRef, (snapshot) => {
 
-    const musicas = [];
+        const dados = snapshot.val();
 
-    if (dados) {
-        Object.values(dados).forEach((musica) => {
-            musicas.push(musica);
-        });
-    }
+        const musicas = [];
 
-    callback(musicas);
-});
+
+        if (dados) {
+
+            Object.values(dados).forEach((musica) => {
+
+                musicas.push(musica);
+
+            });
+
+        }
+
+
+        callback(musicas);
+
+    });
 
 }
 
-/* EDITAR MÚSICA */
+export async function editarMusica(
+    id,
+    titulo,
+    artista,
+    estilo,
+    duracao,
+    capaBase64,
+    audioBase64
+) {
 
-export async function editarMusica(id, titulo, artista, estilo, duracao, capaUrl, audioUrl) {
+    const musicaRef = ref(
+        database,
+        `musicas/${id}`
+    );
 
-const musicaRef = ref(database, `musicas/${id}`);
 
-await update(musicaRef, {
-    titulo: titulo,
-    artista: artista,
-    estilo: estilo,
-    duracao: duracao,
-    capaUrl: capaUrl,
-    audioUrl: audioUrl
-});
+    await update(musicaRef, {
+
+        titulo: titulo,
+
+        artista: artista,
+
+        estilo: estilo,
+
+        duracao: duracao,
+
+        capaBase64: capaBase64,
+
+        audioBase64: audioBase64
+
+    });
+
 }
-
-/* EXCLUIR MÚSICA */
 
 export async function excluirMusica(id) {
-const musicaRef = ref(database, `musicas/${id}`);
 
-await remove(musicaRef);
+    const musicaRef = ref(
+        database,
+        `musicas/${id}`
+    );
+
+
+    await remove(musicaRef);
+
 }

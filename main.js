@@ -4,13 +4,12 @@ import { buscarMusicas } from "./crud.js";
 const listaMusicas = document.getElementById("lista-musicas");
 
 const capaAtual = document.getElementById("capa-atual");
+
 const tituloAtual = document.getElementById("titulo-atual");
+
 const artistaAtual = document.getElementById("artista-atual");
 
 const audioPlayer = document.getElementById("audio-player");
-
-
-// BUSCAR MÚSICAS DO FIREBASE
 
 buscarMusicas((musicas) => {
 
@@ -25,8 +24,9 @@ buscarMusicas((musicas) => {
 
 
         card.innerHTML = `
-            <img 
-                src="${musica.capaUrl}" 
+
+            <img
+                src="${musica.capaBase64}"
                 alt="Capa de ${musica.titulo}"
             >
 
@@ -36,40 +36,39 @@ buscarMusicas((musicas) => {
 
                 <p>${musica.artista}</p>
 
-                <p>${musica.estilo} • ${musica.duracao}</p>
+                <p>
+                    ${musica.estilo} • ${musica.duracao}
+                </p>
 
             </div>
 
             <button class="botao-play">
                 ▶
             </button>
+
         `;
 
 
-        // BOTÃO PLAY
-
-        const botaoPlay = card.querySelector(".botao-play");
-
+        const botaoPlay =
+            card.querySelector(".botao-play");
 
         botaoPlay.addEventListener("click", () => {
 
-            // Atualiza as informações do player
+            capaAtual.src = musica.capaBase64;
 
-            capaAtual.src = musica.capaUrl;
+            tituloAtual.textContent =
+                musica.titulo;
 
-            tituloAtual.textContent = musica.titulo;
+            artistaAtual.textContent =
+                musica.artista;
 
-            artistaAtual.textContent = musica.artista;
 
+            audioPlayer.src =
+                musica.audioBase64;
 
-            // Coloca o áudio
-
-            audioPlayer.src = musica.audioUrl;
 
             audioPlayer.load();
 
-
-            // Começa a tocar
 
             audioPlayer.play().catch((erro) => {
 

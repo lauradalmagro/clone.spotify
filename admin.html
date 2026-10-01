@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Painel Administrativo</title>
-
+<link rel="icon" type="image/png" href="./musica (1).png">
 <link rel="stylesheet" href="./admin.css">
 
 </head>
@@ -68,21 +68,21 @@
             </div>
 
             <div class="campo">
-                <label for="capaUrl">Link da capa</label>
+                <label for="capaUrl">Capa da música</label>
                 <input
-                    type="url"
-                    id="capaUrl"
-                    placeholder="Cole o link da imagem da capa"
+                    type="file"
+                    id="capa"
+                    accept="image/png, image/jpeg"
                     required
                 >
             </div>
 
             <div class="campo">
-                <label for="audioUrl">Link do áudio</label>
+                <label for="audioUrl">Arquivo MP3 da música</label>
                 <input
-                    type="url"
-                    id="audioUrl"
-                    placeholder="Cole o link do arquivo MP3"
+                    type="file"
+                    id="audio"
+                    accept=".mp3,audio/mpeg"
                     required
                 >
             </div>
@@ -108,7 +108,6 @@
 </main>
 
 <script type="module" src="./admin.js"></script>
-```
 
 </body>
 

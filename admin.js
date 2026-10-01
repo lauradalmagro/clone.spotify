@@ -12,28 +12,86 @@ const titulo = document.getElementById("titulo");
 const artista = document.getElementById("artista");
 const estilo = document.getElementById("estilo");
 const duracao = document.getElementById("duracao");
-const capaUrl = document.getElementById("capaUrl");
-const audioUrl = document.getElementById("audioUrl");
+
+const capa = document.getElementById("capa");
+const audio = document.getElementById("audio");
 
 const listaMusicas = document.getElementById("lista-musicas");
 
+function arquivoParaBase64(arquivo) {
 
-// CADASTRAR MÚSICA
+    return new Promise((resolve, reject) => {
+
+        const leitor = new FileReader();
+
+        leitor.onload = () => {
+            resolve(leitor.result);
+        };
+
+        leitor.onerror = () => {
+            reject(leitor.error);
+        };
+
+        leitor.readAsDataURL(arquivo);
+
+    });
+
+}
 
 formulario.addEventListener("submit", async (evento) => {
 
     evento.preventDefault();
 
+
+    const arquivoCapa = capa.files[0];
+    const arquivoAudio = audio.files[0];
+
+    if (!arquivoCapa) {
+        alert("Selecione uma imagem para a capa.");
+        return;
+    }
+
+    if (!arquivoAudio) {
+        alert("Selecione um arquivo MP3.");
+        return;
+    }
+
+    if (
+        arquivoCapa.type !== "image/jpeg" &&
+        arquivoCapa.type !== "image/png"
+    ) {
+
+        alert("A capa precisa ser uma imagem JPG ou PNG.");
+        return;
+
+    }
+
+    if (
+        arquivoAudio.type !== "audio/mpeg" &&
+        !arquivoAudio.name.toLowerCase().endsWith(".mp3")
+    ) {
+
+        alert("O arquivo de áudio precisa ser MP3.");
+        return;
+
+    }
+
+
     try {
+
+        const capaBase64 = await arquivoParaBase64(arquivoCapa);
+
+        const audioBase64 = await arquivoParaBase64(arquivoAudio);
 
         await criarMusica(
             titulo.value.trim(),
             artista.value.trim(),
             estilo.value.trim(),
             duracao.value.trim(),
-            capaUrl.value.trim(),
-            audioUrl.value.trim()
+            capaBase64,
+            audioBase64
         );
+
 
         alert("Música cadastrada com sucesso!");
 
@@ -44,16 +102,15 @@ formulario.addEventListener("submit", async (evento) => {
         console.error("Erro ao cadastrar música:", erro);
 
         alert("Erro ao cadastrar a música.");
+
     }
 
 });
 
-
-// MOSTRAR MÚSICAS
-
 buscarMusicas((musicas) => {
 
     listaMusicas.innerHTML = "";
+
 
     musicas.forEach((musica) => {
 
@@ -61,8 +118,12 @@ buscarMusicas((musicas) => {
 
         card.classList.add("musica");
 
+
         card.innerHTML = `
-            <img src="${musica.capaUrl}" alt="Capa da música">
+            <img
+                src="${musica.capaBase64}"
+                alt="Capa da música"
+            >
 
             <div class="informacoes">
 
@@ -87,10 +148,8 @@ buscarMusicas((musicas) => {
             </div>
         `;
 
-
-        // BOTÃO EXCLUIR
-
         const botaoExcluir = card.querySelector(".btn-excluir");
+
 
         botaoExcluir.addEventListener("click", async () => {
 
@@ -98,9 +157,11 @@ buscarMusicas((musicas) => {
                 `Deseja excluir "${musica.titulo}"?`
             );
 
+
             if (!confirmar) {
                 return;
             }
+
 
             try {
 
@@ -113,14 +174,13 @@ buscarMusicas((musicas) => {
                 console.error("Erro ao excluir:", erro);
 
                 alert("Erro ao excluir a música.");
+
             }
 
         });
 
-
-        // BOTÃO EDITAR
-
         const botaoEditar = card.querySelector(".btn-editar");
+
 
         botaoEditar.addEventListener("click", async () => {
 
@@ -164,26 +224,6 @@ buscarMusicas((musicas) => {
             }
 
 
-            const novaCapaUrl = prompt(
-                "Novo link da capa:",
-                musica.capaUrl
-            );
-
-            if (novaCapaUrl === null) {
-                return;
-            }
-
-
-            const novoAudioUrl = prompt(
-                "Novo link do áudio:",
-                musica.audioUrl
-            );
-
-            if (novoAudioUrl === null) {
-                return;
-            }
-
-
             try {
 
                 await editarMusica(
@@ -192,9 +232,10 @@ buscarMusicas((musicas) => {
                     novoArtista.trim(),
                     novoEstilo.trim(),
                     novaDuracao.trim(),
-                    novaCapaUrl.trim(),
-                    novoAudioUrl.trim()
+                    musica.capaBase64,
+                    musica.audioBase64
                 );
+
 
                 alert("Música editada com sucesso!");
 
@@ -203,6 +244,7 @@ buscarMusicas((musicas) => {
                 console.error("Erro ao editar:", erro);
 
                 alert("Erro ao editar a música.");
+
             }
 
         });
